@@ -18,7 +18,7 @@ def load_mpeg7_images():
 	target = np.empty([len(filename), ])
 
 	label = ''
-	class_num = 0
+	class_num = -1
 	index = 0
 
 	for file in filename:
@@ -28,10 +28,9 @@ def load_mpeg7_images():
 			
 			if(label != tmp[0]):
 				label = tmp[0]
-				target[index] = class_num
-
-			else:
 				class_num += 1
+				target[index] = class_num
+			else:
 				target[index] = class_num
 			index += 1
 
