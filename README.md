@@ -14,3 +14,8 @@ This project implements a shape analysis and classification library based on the
 4. Shape Characterization
 5. Shape Classification
 6. Examples
+
+
+**Examples**
+
+[Example Group 3](examples/Group_3.ipynb)
