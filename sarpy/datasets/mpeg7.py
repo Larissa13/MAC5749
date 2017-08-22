@@ -14,7 +14,7 @@ def load_mpeg7_images():
 	data = []
 
 	# Numpy array of labels associated to each class of image
-	target = np.empty([len(filename), ])
+	target = np.empty(len(filename), dtype='uint8')
 
 	previous_label = ''
 	class_num = -1
