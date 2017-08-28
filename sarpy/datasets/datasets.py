@@ -149,7 +149,7 @@ def load_nist(block=0):
                             list_of_images = os.listdir(directory_of_images)
                             sorted(list_of_images)
                             for filename in list_of_images:
-                                    img = np.where(io.imread(os.path.join(directory_of_images,filename)) > 0, 0, 1)                                    
+                                    img = np.where(io.imread(os.path.join(directory_of_images,filename),True) > 0, 0, 1)                                    
                                     bitmaps.append(img.astype(np.int8))
                                     targets.append(id_class);
                     id_class += 1
