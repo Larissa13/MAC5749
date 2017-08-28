@@ -4,7 +4,7 @@
 http://rogerdudler.github.io/git-guide/
 
 
-This project implements a shape analysis and classification library based on the Shape Analysis Course at IME-USP, Brazil. The library is based on the Shape Analysis book.
+This project implements a shape analysis and classification library based on the [Shape Analysis Course at IME-USP](https://www.ime.usp.br/index.php?option=com_replicado&task=disciplina&sgldis=MAC5749), Brazil. The library is based on the Shape Analysis book.
 
 **Categories**
 
