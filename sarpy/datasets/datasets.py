@@ -53,14 +53,13 @@ def load_mpeg7():
 def load_leaf():
     """Loads the Leaf Shape dataset
 
-    Returns
+Returns
     -------
     dataset : dict
         Dictionary object, the interesting attributes are: 'bitmaps',
         a vector of the images of the dataset as 2D NumPy arrays,
         and 'targets', a vector of the target/class of each image.
     """
-    
     # List of image file names
     dataset_directory = os.path.join(root_directory,'Leaf_2')
     filenames = os.listdir(dataset_directory)
@@ -77,7 +76,7 @@ def load_leaf():
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(np.invert(io.imread(os.path.join(dataset_directory, filename))))
+        data.append(io.imread(os.path.join(dataset_directory, filename)))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -88,7 +87,6 @@ def load_leaf():
             target[index] = class_num
 
     return {'bitmaps': data, 'targets': target}
-
 
 def load_mnist():
     """Loads the MNIST character dataset. [add more info!]
