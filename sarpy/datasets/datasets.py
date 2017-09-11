@@ -88,6 +88,44 @@ Returns
 
     return {'bitmaps': data, 'targets': target}
 
+def load_fashion_mnist():
+    """Loads the Leaf Shape dataset
+
+Returns
+    -------
+    dataset : dict
+        Dictionary object, the interesting attributes are: 'bitmaps',
+        a vector of the images of the dataset as 2D NumPy arrays,
+        and 'targets', a vector of the target/class of each image.
+    """
+    # List of image file names
+    dataset_directory = os.path.join(root_directory,'Fashion_MNIST')
+    filenames = os.listdir(dataset_directory)
+    filenames.sort()
+
+    # List of numpy array; each row is a Image of the dataset
+    data = []
+
+    # Numpy array of labels associated to each class of image
+    target = np.empty([len(filenames), ])
+
+    previous_label = ''
+    class_num = -1
+    index = 0
+
+    for index, filename in enumerate(filenames):
+        data.append(io.imread(os.path.join(dataset_directory, filename)))
+        file_label = filename.split('-')[0]
+        
+        if(previous_label != file_label):
+            previous_label = file_label
+            class_num += 1
+            target[index] = class_num
+        else:
+            target[index] = class_num
+
+    return {'bitmaps': data, 'targets': target}
+
 def load_mnist():
     """Loads the MNIST character dataset. [add more info!]
     Returns
