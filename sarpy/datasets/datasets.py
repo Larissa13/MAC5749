@@ -8,6 +8,8 @@ from skimage import io
 import pandas as pd
 import binascii
 
+from sarpy.utils import *
+
 # Root directory for this package
 root_directory = os.path.dirname(__file__)
 
@@ -37,7 +39,7 @@ def load_mpeg7():
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(io.imread(os.path.join(dataset_directory, filename)))
+        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -65,7 +67,7 @@ Returns
     filenames = os.listdir(dataset_directory)
     filenames.sort()
 
-    # List of numpy array; each row is a Image of the dataset
+    # List of bitmap Shapes; each row is a Image of the dataset
     data = []
 
     # Numpy array of labels associated to each class of image
@@ -76,7 +78,7 @@ Returns
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(io.imread(os.path.join(dataset_directory, filename)))
+        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -89,7 +91,7 @@ Returns
     return {'bitmaps': data, 'targets': target}
 
 def load_fashion_mnist():
-    """Loads the Leaf Shape dataset
+    """Loads the Fashion MNIST dataset
 
 Returns
     -------
@@ -114,7 +116,7 @@ Returns
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(io.imread(os.path.join(dataset_directory, filename)))
+        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -188,7 +190,7 @@ def load_nist(block=0):
                             sorted(list_of_images)
                             for filename in list_of_images:
                                     img = np.where(io.imread(os.path.join(directory_of_images,filename),True) > 0, 0, 1)                                    
-                                    bitmaps.append(img.astype(np.int8))
+                                    bitmaps.append(Shape(type_bitmap,img.astype(np.int8)))
                                     targets.append(id_class);
                     id_class += 1
                     names.append(binascii.unhexlify(a_class).decode('UTF-8'));        
