@@ -45,6 +45,7 @@ def convert_shape(shape, new_type, **kwargs):
 
 def convert_to_bitmap(shape):
     pass
+
 def convert_to_contour(shape):
     """
     Converts a given shape into a contour.
