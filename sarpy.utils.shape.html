@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sarpy.utils.shape module &#8212; sarpy 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sarpy.binaryScale module" href="sarpy.binaryScale.html" />
+    <link rel="prev" title="sarpy.utils package" href="sarpy.utils.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.binaryScale.html" title="sarpy.binaryScale module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.utils.html" title="sarpy.utils package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" >sarpy package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sarpy.utils.html" accesskey="U">sarpy.utils package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sarpy.utils.shape">
+<span id="sarpy-utils-shape-module"></span><h1>sarpy.utils.shape module<a class="headerlink" href="#module-sarpy.utils.shape" title="Permalink to this headline">¶</a></h1>
+<p>The “Shape” general object is a catch-all for representing the many types
+of possible shape representations, allowing a degree of abstraction to the user,
+and making some of the conversions transparent when possible.</p>
+<dl class="class">
+<dt id="sarpy.utils.shape.Shape">
+<em class="property">class </em><code class="descclassname">sarpy.utils.shape.</code><code class="descname">Shape</code><span class="sig-paren">(</span><em>shape_type</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.Shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sarpy.utils.shape.Shape.all">
+<code class="descname">all</code><span class="sig-paren">(</span><em>axis=None</em>, <em>out=None</em>, <em>keepdims=False</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.Shape.all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sarpy.utils.shape.Shape.any">
+<code class="descname">any</code><span class="sig-paren">(</span><em>axis=None</em>, <em>out=None</em>, <em>keepdims=False</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.Shape.any" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sarpy.utils.shape.Shape.get_type_name">
+<code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.Shape.get_type_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.utils.shape.is_data_valid">
+<code class="descclassname">sarpy.utils.shape.</code><code class="descname">is_data_valid</code><span class="sig-paren">(</span><em>data</em>, <em>shape_type</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.is_data_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies is a given data object is valid for a given shape type.
+Verifies if a given shape type is valid.
+Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>data: Object
+- Data object being verified</li>
+<li>shape_type: int
+- Shape type to check against</li>
+</ul>
+<p>Returns:
+* valid: bool</p>
+<blockquote>
+<div><ul class="simple">
+<li>True if valid, False otherwise.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.utils.shape.is_type_valid">
+<code class="descclassname">sarpy.utils.shape.</code><code class="descname">is_type_valid</code><span class="sig-paren">(</span><em>shape_type</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.utils.shape.is_type_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies if a given shape type is valid.
+Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>shape_type: int
+- Shape type being verified</li>
+</ul>
+<p>Returns:
+* valid: bool</p>
+<blockquote>
+<div><ul class="simple">
+<li>True if valid, False otherwise.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sarpy.utils.html"
+                        title="previous chapter">sarpy.utils package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sarpy.binaryScale.html"
+                        title="next chapter">sarpy.binaryScale module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sarpy.utils.shape.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.binaryScale.html" title="sarpy.binaryScale module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.utils.html" title="sarpy.utils package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" >sarpy package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sarpy.utils.html" >sarpy.utils package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, ademirtc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

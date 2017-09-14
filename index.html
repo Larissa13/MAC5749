@@ -1,1 +1,274 @@
-First commit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sarpy package &#8212; sarpy 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sarpy.datasets package" href="sarpy.datasets.html" />
+    <link rel="prev" title="sarpy" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.datasets.html" title="sarpy.datasets package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="sarpy"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sarpy-package">
+<h1>sarpy package<a class="headerlink" href="#sarpy-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.datasets.html">sarpy.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sarpy.datasets.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sarpy.datasets.datasets.html">sarpy.datasets.datasets module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sarpy.datasets.html#module-sarpy.datasets">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.utils.html">sarpy.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sarpy.utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sarpy.utils.shape.html">sarpy.utils.shape module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sarpy.utils.html#module-sarpy.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.binaryScale.html">sarpy.binaryScale module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.binaryShift.html">sarpy.binaryShift module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.bitmap2pointsSet.html">sarpy.bitmap2pointsSet module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.conversions.html">sarpy.conversions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.extractContours.html">sarpy.extractContours module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.plotContour.html">sarpy.plotContour module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.plotContour1D.html">sarpy.plotContour1D module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.pointsSet2bitmap.html">sarpy.pointsSet2bitmap module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sarpy.transformations.html">sarpy.transformations module</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-sarpy"></span><div class="section" id="shape-analysis-recognition-module">
+<h3>Shape Analysis &amp; Recognition module<a class="headerlink" href="#shape-analysis-recognition-module" title="Permalink to this headline">¶</a></h3>
+<p>[module description goes here]</p>
+<p>Requires:
+- NumPy
+- Pandas
+- Scikit Image</p>
+<dl class="function">
+<dt id="sarpy.shape_scale">
+<code class="descclassname">sarpy.</code><code class="descname">shape_scale</code><span class="sig-paren">(</span><em>shape</em>, <em>c</em>, <em>center=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.shape_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales shape by a certain factor. This function calls the appropriate <cite>shape_scale</cite>
+function for the type of the given shape.</p>
+<p>Parameters:
+* shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Input shape</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>c: {float, tuple of floats}</dt>
+<dd><ul class="first last">
+<li>Scale factors. Separate factors can be defined as (row_scale, col_scale)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>center: tuple of ints, optional</dt>
+<dd><ul class="first last">
+<li>(x,y)-coordinates of the center of the image</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:
+* scaled_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Scaled version of the input shape</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.shape_shift">
+<code class="descclassname">sarpy.</code><code class="descname">shape_shift</code><span class="sig-paren">(</span><em>shape</em>, <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.shape_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shifts shape by a certain factor. This function calls the appropriate <cite>shift_scale</cite>
+function for the type of the given shape.</p>
+<p>Parameters:
+* shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Input shape</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>c: {float, tuple of floats}</dt>
+<dd><ul class="first last">
+<li>Shift factors. Separate factors can be defined as (row_scale, col_scale)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:
+* shifted_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Shifted version of the input shape</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.convert_shape">
+<code class="descclassname">sarpy.</code><code class="descname">convert_shape</code><span class="sig-paren">(</span><em>shape</em>, <em>new_type</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.convert_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given shape into another representation.</p>
+<p>Parameters:
+* shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Input shape</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>new_type: int
+- New type of the shape. Must be one of the types defined in sarpy.utils.</li>
+<li>kwargs
+- Arguments for the different conversions.</li>
+</ul>
+<p>Returns:
+* converted_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Converted representation of the input shape</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="modules.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sarpy package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a><ul>
+<li><a class="reference internal" href="#shape-analysis-recognition-module">Shape Analysis &amp; Recognition module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">sarpy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sarpy.datasets.html"
+                        title="next chapter">sarpy.datasets package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sarpy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.datasets.html" title="sarpy.datasets package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="sarpy"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, ademirtc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

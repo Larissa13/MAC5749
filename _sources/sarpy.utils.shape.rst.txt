@@ -1,0 +1,7 @@
+sarpy\.utils\.shape module
+==========================
+
+.. automodule:: sarpy.utils.shape
+    :members:
+    :undoc-members:
+    :show-inheritance:

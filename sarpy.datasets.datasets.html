@@ -1,0 +1,205 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sarpy.datasets.datasets module &#8212; sarpy 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sarpy.utils package" href="sarpy.utils.html" />
+    <link rel="prev" title="sarpy.datasets package" href="sarpy.datasets.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.utils.html" title="sarpy.utils package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.datasets.html" title="sarpy.datasets package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" >sarpy package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sarpy.datasets.html" accesskey="U">sarpy.datasets package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sarpy.datasets.datasets">
+<span id="sarpy-datasets-datasets-module"></span><h1>sarpy.datasets.datasets module<a class="headerlink" href="#module-sarpy.datasets.datasets" title="Permalink to this headline">¶</a></h1>
+<p>Methods for loading and returning in-built datasets.</p>
+<dl class="function">
+<dt id="sarpy.datasets.datasets.load_fashion_mnist">
+<code class="descclassname">sarpy.datasets.datasets.</code><code class="descname">load_fashion_mnist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.datasets.load_fashion_mnist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the Fashion MNIST dataset</p>
+<dl class="docutils">
+<dt>Returns</dt>
+<dd><dl class="first last docutils">
+<dt>dataset <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Dictionary object, the interesting attributes are: ‘bitmaps’,
+a vector of the images of the dataset as 2D NumPy arrays,
+and ‘targets’, a vector of the target/class of each image.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.datasets.datasets.load_leaf">
+<code class="descclassname">sarpy.datasets.datasets.</code><code class="descname">load_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.datasets.load_leaf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the Leaf Shape dataset</p>
+<dl class="docutils">
+<dt>Returns</dt>
+<dd><dl class="first last docutils">
+<dt>dataset <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Dictionary object, the interesting attributes are: ‘bitmaps’,
+a vector of the images of the dataset as 2D NumPy arrays,
+and ‘targets’, a vector of the target/class of each image.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.datasets.datasets.load_mnist">
+<code class="descclassname">sarpy.datasets.datasets.</code><code class="descname">load_mnist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.datasets.load_mnist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the MNIST character dataset. [add more info!]
+Returns
+——-
+dataset : dict</p>
+<blockquote>
+<div>Dictionary object, the interesting attributes are: ‘bitmaps’,
+a vector of the images of the dataset as 2D NumPy arrays,
+and ‘targets’, a vector of the target/class of each image.</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.datasets.datasets.load_mpeg7">
+<code class="descclassname">sarpy.datasets.datasets.</code><code class="descname">load_mpeg7</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.datasets.load_mpeg7" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the MPEG7 Shape dataset, containing 1400 images of
+70 classes (20 images per class).
+Returns
+——-
+dataset : dict</p>
+<blockquote>
+<div>Dictionary object, the interesting attributes are: ‘bitmaps’,
+a vector of the images of the dataset as 2D NumPy arrays,
+and ‘targets’, a vector of the target/class of each image.</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.datasets.datasets.load_nist">
+<code class="descclassname">sarpy.datasets.datasets.</code><code class="descname">load_nist</code><span class="sig-paren">(</span><em>block=0</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.datasets.load_nist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the NIST character dataset. [add more info]
+Parameters
+———-</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><dl class="first last docutils">
+<dt>size of database loaded, </dt>
+<dd>0 - “100 images by class”       -&gt; total 6200
+1 - “1000 images by class”      -&gt; total 62000
+2 - “max 10000 images by class” -&gt; total 397621 images</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>dataset <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Dictionary object, the interesting attributes are: ‘bitmaps’,
+a vector of the images of the dataset as 2D NumPy arrays,
+and ‘targets’, a vector of the target/class of each image.</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sarpy.datasets.html"
+                        title="previous chapter">sarpy.datasets package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sarpy.utils.html"
+                        title="next chapter">sarpy.utils package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sarpy.datasets.datasets.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.utils.html" title="sarpy.utils package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.datasets.html" title="sarpy.datasets package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" >sarpy package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sarpy.datasets.html" >sarpy.datasets package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, ademirtc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

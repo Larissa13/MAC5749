@@ -1,0 +1,7 @@
+sarpy\.binaryScale module
+=========================
+
+.. automodule:: sarpy.binaryScale
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,17 @@
+sarpy\.utils package
+====================
+
+Submodules
+----------
+
+.. toctree::
+
+   sarpy.utils.shape
+
+Module contents
+---------------
+
+.. automodule:: sarpy.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

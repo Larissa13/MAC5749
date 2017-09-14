@@ -1,0 +1,17 @@
+sarpy\.datasets package
+=======================
+
+Submodules
+----------
+
+.. toctree::
+
+   sarpy.datasets.datasets
+
+Module contents
+---------------
+
+.. automodule:: sarpy.datasets
+    :members:
+    :undoc-members:
+    :show-inheritance:

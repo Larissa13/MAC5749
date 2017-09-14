@@ -1,0 +1,204 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sarpy.conversions module &#8212; sarpy 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sarpy.extractContours module" href="sarpy.extractContours.html" />
+    <link rel="prev" title="sarpy.bitmap2pointsSet module" href="sarpy.bitmap2pointsSet.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.extractContours.html" title="sarpy.extractContours module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.bitmap2pointsSet.html" title="sarpy.bitmap2pointsSet module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" accesskey="U">sarpy package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sarpy.conversions">
+<span id="sarpy-conversions-module"></span><h1>sarpy.conversions module<a class="headerlink" href="#module-sarpy.conversions" title="Permalink to this headline">¶</a></h1>
+<p>Methods for converting shape representations into other shape representations.</p>
+<dl class="function">
+<dt id="sarpy.conversions.convert_shape">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_shape</code><span class="sig-paren">(</span><em>shape</em>, <em>new_type</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given shape into another representation.</p>
+<p>Parameters:
+* shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Input shape</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>new_type: int
+- New type of the shape. Must be one of the types defined in sarpy.utils.</li>
+<li>kwargs
+- Arguments for the different conversions.</li>
+</ul>
+<p>Returns:
+* converted_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Converted representation of the input shape</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_bitmap">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_bitmap</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_complex_contour">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_complex_contour</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_complex_contour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_contour">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_contour</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_contour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given shape into a contour.
+Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>shape: Shape
+- Input shape</li>
+</ul>
+<p>Returns:
+* converted_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Contour representation of the input shape</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_landmark">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_landmark</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_landmark" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_point_set">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_point_set</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_point_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given shape into a pointset.
+Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>shape: Shape
+- Input shape</li>
+</ul>
+<p>Returns:
+* converted_shape: Shape</p>
+<blockquote>
+<div><ul class="simple">
+<li>Point set representation of the input shape</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sarpy.conversions.convert_to_polar_contour">
+<code class="descclassname">sarpy.conversions.</code><code class="descname">convert_to_polar_contour</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.conversions.convert_to_polar_contour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sarpy.bitmap2pointsSet.html"
+                        title="previous chapter">sarpy.bitmap2pointsSet module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sarpy.extractContours.html"
+                        title="next chapter">sarpy.extractContours module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sarpy.conversions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sarpy.extractContours.html" title="sarpy.extractContours module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sarpy.bitmap2pointsSet.html" title="sarpy.bitmap2pointsSet module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="modules.html">sarpy 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sarpy.html" >sarpy package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, ademirtc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

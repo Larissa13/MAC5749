@@ -1,0 +1,7 @@
+sarpy\.pointsSet2bitmap module
+==============================
+
+.. automodule:: sarpy.pointsSet2bitmap
+    :members:
+    :undoc-members:
+    :show-inheritance:

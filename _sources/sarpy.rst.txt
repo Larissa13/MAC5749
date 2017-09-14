@@ -1,0 +1,33 @@
+sarpy package
+=============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sarpy.datasets
+    sarpy.utils
+
+Submodules
+----------
+
+.. toctree::
+
+   sarpy.binaryScale
+   sarpy.binaryShift
+   sarpy.bitmap2pointsSet
+   sarpy.conversions
+   sarpy.extractContours
+   sarpy.plotContour
+   sarpy.plotContour1D
+   sarpy.pointsSet2bitmap
+   sarpy.transformations
+
+Module contents
+---------------
+
+.. automodule:: sarpy
+    :members:
+    :undoc-members:
+    :show-inheritance:
