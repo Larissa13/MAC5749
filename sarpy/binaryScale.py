@@ -13,9 +13,35 @@ from math import ceil
 # Returns:
 # * g: ndarray
 #     - Scaled version of the input image
+"""
+    >>> print(1)
+    >>> print("Hello world")
+"""
 
 def shapeScale(img, c, center=(0,0)):
+    """Example function with types documented in the docstring.
+
+    `PEP 484`_ type annotations are supported. If attribute, parameter, and
+    return types are annotated according to `PEP 484`_, they do not need to be
+    included in the docstring:
+
+    Args:
+        param1 (int): The first parameter.
+        param2 (str): The second parameter.
+
+    Returns:
+        bool: The return value. True for success, False otherwise.
+
+    .. _PEP 484:
+        https://www.python.org/dev/peps/pep-0484/
     
+    >>> read image
+    >>> apply filter
+    >>> save image into folder images
+    
+     .. figure::  images/out.png
+        :align:   center        
+    """
     if type(c) == type((0,0)):
         c1 = c[0]
         c2 = c[1]
