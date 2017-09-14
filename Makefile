@@ -21,7 +21,7 @@ html: Makefile
 	rm -f docs/source/*.rst
 	sphinx-apidoc -fe -o docs/source sarpy
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-''
+
 gh-pages:
 	git checkout gh-pages
 	rm -rf {build,_static,images,_sources,.nojekyll}
