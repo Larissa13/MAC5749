@@ -20,8 +20,6 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
-print(os.path.abspath('../'))
-print("marks")
 
 # -- General configuration ------------------------------------------------
 
@@ -38,9 +36,10 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
+    'sphinx.ext.napoleon',
     'sphinx.ext.githubpages']
-# 'sphinx.ext.viewcode',
 
+# 'sphinx.ext.viewcode',
 sphinx_to_github = True
 sphinx_to_github_verbose = True
 sphinx_to_github_encoding = "utf-8"
@@ -95,8 +94,9 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'alabaster'
+# html_theme = 'alabaster'
 html_theme = 'classic'
+# html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
