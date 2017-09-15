@@ -6,6 +6,7 @@ from .shape import Shape
 from .contour import Contour
 from .pointSet import PointSet
 from skimage import measure
+import skimage.io as skio
 
 class Bitmap(Shape):
     def __init__(self, data):
@@ -79,4 +80,13 @@ class Bitmap(Shape):
             row += 1
         return PointSet(np.array(data))
 
+    def save(self, filename):
+        skio.imsave(self.data, filename)
 
+    def read(self, filename):
+        img = skio.imread(filename)
+        self.data = img
+        self.shape = img.shape
+        
+    def show(self):
+        skio.imshow(self.data)
