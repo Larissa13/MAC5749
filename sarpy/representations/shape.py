@@ -40,3 +40,15 @@ class Shape:
     def to_contours(self):
         raise NotImplementedError()
         pass
+
+    def save(self, filename):
+        raise NotImplementedError()
+        pass
+
+    def read(self, filename):
+        raise NotImplementedError()
+        pass
+
+    def show(self):
+        raise NotImplementedError()
+        pass
