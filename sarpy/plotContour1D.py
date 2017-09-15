@@ -2,7 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plotContour1D(c, show='default'):
-    
+    """
+        Plot a contour as a graph of x, y coordinates in fuction of the parametric position. 
+
+        Parameters:
+        * c: nparray
+          - Input contour type ndarray with at least 3 columns
+        * show: string, optional, default: 'default'
+		  - The show mode of two coordinates x, y. This parameter can be:
+			o 'default' shows both of the coordinates plot in separated graphs
+			o 'together' shows both of the coordinates plot in the same graph
+			o 'line' shows only the graph of line coordinates x
+			o 'column' shows only the graph of column coordinates y
+        
+    """
     if (type(c) == type(np.array(()))) & (c.shape[1] >= 3):
         
         if (show == 'default'):
