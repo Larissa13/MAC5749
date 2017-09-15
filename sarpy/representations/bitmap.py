@@ -3,7 +3,7 @@ Bitmap representation of shapes
 """
 import numpy as np
 from .shape import Shape
-from .contour import Contour
+from .contour import Contour, extract_contours
 from .pointSet import PointSet
 from skimage import measure
 import skimage.io as skio
@@ -60,7 +60,7 @@ class Bitmap(Shape):
         return self
 
     def to_contour(self):
-        return Contour.extract_contours(self.data)
+        return extract_contours(self.data)
 
     def to_pointSet(self):
         bitmapImage = self.data
@@ -80,7 +80,7 @@ class Bitmap(Shape):
         skio.imsave(filename,self.data)
 
     def read(self, filename):
-        img = skio.imread(filename)
+        img = skio.imread(filename, as_grey=True)
         self.data = img
         self.shape = img.shape
         
