@@ -9,7 +9,6 @@ Requires:
 - Scikit Image
 """
 
-from .transformations import shape_scale, shape_shift
-from .conversions import convert_shape
+from .representations import *
 
-__all__ = ['datasets', 'utils', 'shape_scale', 'shape_shift', 'convert_shape']
+__all__ = ['representations', 'plotContour', 'plotContour1D']
