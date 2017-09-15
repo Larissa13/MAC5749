@@ -151,14 +151,14 @@ def shape_shift_bitmap(shape, c):
     else:
         c1 = c2 = c
 
-    g = np.zeros_like(img)
-    for i in range(img.shape[0]):
-        for j in range(img.shape[1]):
+    g = np.zeros_like(shape)
+    for i in range(shape.shape[0]):
+        for j in range(shape.shape[1]):
             x = i - c1
             y = j - c2
-            if x < img.shape[0] and y < img.shape[1]:
+            if x < shape.shape[0] and y < shape.shape[1]:
                 if x > 0 and y > 0:
-                    g[i, j] = img[x, y]
+                    g[i, j] = shape[x, y]
                 else:
                     g[i, j] = 0
     return Shape(type_bitmap, g)
