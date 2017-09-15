@@ -60,11 +60,7 @@ class Bitmap(Shape):
         return self
 
     def to_contour(self):
-        contours = measure.find_contours(self.data, 0)
-        contours_lens = np.array([len(c) for c in contours])
-        sort_order = (-contours_lens).argsort()
-        data = np.array([np.array([np.array([j, contours[i][j][0], contours[i][j][1]], dtype = int) for j in range(len(contours[i]))], dtype = int) for i in sort_order])
-        return Contour(data)
+        return Contour.extract_contours(self.data)
 
     def to_pointSet(self):
         bitmapImage = self.data
@@ -81,7 +77,7 @@ class Bitmap(Shape):
         return PointSet(np.array(data))
 
     def save(self, filename):
-        skio.imsave(self.data, filename)
+        skio.imsave(filename,self.data)
 
     def read(self, filename):
         img = skio.imread(filename)
