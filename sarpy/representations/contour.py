@@ -3,7 +3,16 @@ Contour representation of shapes
 """
 import numpy as np
 from .shape import Shape
+import skimage.io as skio
+from skimage import measure
 
+def extract_contours(img):
+    contours = measure.find_contours(img, 0)
+    contours_lens = np.array([len(c) for c in contours])
+    sort_order = (-contours_lens).argsort()
+    data = np.array([np.array([np.array([j, contours[i][j][0], contours[i][j][1]], dtype = int) for j in range(len(contours[i]))], dtype = int) for i in sort_order])
+    return Contour(data)
+ 
 class Contour(Shape):
     def __init__(self, data):
         self.data = data
@@ -27,8 +36,21 @@ class Contour(Shape):
                 py = floor(i*y_ratio) ;
                 g[(i*w2)+j] = contour[py][px];
         g = g.reshape(h2,w2)
-        return Shape(type_contour, g);
+        return Contour(g);
 
     def to_contour(self):
         return self
     
+    def to_landmarks(self):
+        return self
+
+    def save(self, filename):
+        pass
+
+    def read(self, filename):
+        img = skio.imread(filename, as_grey=True)
+        contour = extract_contours(img)
+        self.data = contour.data
+        self.shape = contour.shape
+
+
