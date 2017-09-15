@@ -128,22 +128,6 @@ Returns
 
     return {'bitmaps': data, 'targets': target}
 
-def load_mnist():
-    """Loads the MNIST character dataset. [add more info!]
-    Returns
-    -------
-    dataset : dict
-        Dictionary object, the interesting attributes are: 'bitmaps',
-        a vector of the images of the dataset as 2D NumPy arrays,
-        and 'targets', a vector of the target/class of each image.
-    """
-    dataset_directory = os.path.join(root_directory,'MNIST')
-    MNIST_dataset = pd.read_csv(os.path.join(dataset_directory,'MNIST.csv'))
-    X = MNIST_dataset.iloc[0:5000,1:]
-    y = MNIST_dataset.iloc[0:5000,:1]
-
-    return {'bitmaps': X, 'targets': y}
-
 def load_nist(block=0):
     """Loads the NIST character dataset. [add more info]
     Parameters
