@@ -12,5 +12,5 @@ def contour_image(img, obj = 0):
     out = np.zeros(img.shape)
     contour = extract_contours(img)[obj].astype(int)
     for pixel in contour:
-        out[pixel[0], pixel[1]] = np.uint8(1)
+        out[pixel[1], pixel[2]] = np.uint8(1)
     return(out)
