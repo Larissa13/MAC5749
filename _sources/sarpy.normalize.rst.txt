@@ -1,0 +1,7 @@
+sarpy\.normalize module
+=======================
+
+.. automodule:: sarpy.normalize
+    :members:
+    :undoc-members:
+    :show-inheritance:

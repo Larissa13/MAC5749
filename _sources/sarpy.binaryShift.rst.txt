@@ -1,7 +1,0 @@
-sarpy\.binaryShift module
-=========================
-
-.. automodule:: sarpy.binaryShift
-    :members:
-    :undoc-members:
-    :show-inheritance:

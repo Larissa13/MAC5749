@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>sarpy.plotContour1D module &#8212; sarpy 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -57,8 +57,33 @@
 <span id="sarpy-plotcontour1d-module"></span><h1>sarpy.plotContour1D module<a class="headerlink" href="#module-sarpy.plotContour1D" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="sarpy.plotContour1D.plotContour1D">
-<code class="descclassname">sarpy.plotContour1D.</code><code class="descname">plotContour1D</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.plotContour1D.plotContour1D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">sarpy.plotContour1D.</code><code class="descname">plotContour1D</code><span class="sig-paren">(</span><em>c</em>, <em>show='default'</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.plotContour1D.plotContour1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a contour as a graph of x, y coordinates in fuction of the parametric position.</p>
+<p>Parameters:
+* c: nparray</p>
+<blockquote>
+<div><ul class="simple">
+<li>Input contour type ndarray with at least 3 columns</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>show: string, optional, default: ‘default’</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>The show mode of two coordinates x, y. This parameter can be:</dt>
+<dd>o ‘default’ shows both of the coordinates plot in separated graphs
+o ‘together’ shows both of the coordinates plot in the same graph
+o ‘line’ shows only the graph of line coordinates x
+o ‘column’ shows only the graph of column coordinates y</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
 
 </div>
 

@@ -15,10 +15,10 @@ Submodules
 .. toctree::
 
    sarpy.binaryScale
-   sarpy.binaryShift
    sarpy.bitmap2pointsSet
    sarpy.conversions
    sarpy.extractContours
+   sarpy.normalize
    sarpy.plotContour
    sarpy.plotContour1D
    sarpy.pointsSet2bitmap

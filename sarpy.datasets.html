@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>sarpy.datasets package &#8212; sarpy 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -73,52 +73,45 @@ and includes some in-built datasets. Based on:
 <code class="descclassname">sarpy.datasets.</code><code class="descname">load_mpeg7</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.load_mpeg7" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the MPEG7 Shape dataset, containing 1400 images of
 70 classes (20 images per class).
-Returns
-——-
-dataset : dict</p>
+:returns: <strong>dataset</strong> – Dictionary object, the interesting attributes are: ‘bitmaps’,</p>
 <blockquote>
-<div>Dictionary object, the interesting attributes are: ‘bitmaps’,
-a vector of the images of the dataset as 2D NumPy arrays,
+<div>a vector of the images of the dataset as 2D NumPy arrays,
 and ‘targets’, a vector of the target/class of each image.</div></blockquote>
-</dd></dl>
-
-<dl class="function">
-<dt id="sarpy.datasets.load_mnist">
-<code class="descclassname">sarpy.datasets.</code><code class="descname">load_mnist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.load_mnist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the MNIST character dataset. [add more info!]
-Returns
-——-
-dataset : dict</p>
-<blockquote>
-<div>Dictionary object, the interesting attributes are: ‘bitmaps’,
-a vector of the images of the dataset as 2D NumPy arrays,
-and ‘targets’, a vector of the target/class of each image.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="sarpy.datasets.load_nist">
 <code class="descclassname">sarpy.datasets.</code><code class="descname">load_nist</code><span class="sig-paren">(</span><em>block=0</em><span class="sig-paren">)</span><a class="headerlink" href="#sarpy.datasets.load_nist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the NIST character dataset. [add more info]
-Parameters
-———-</p>
+:param block:</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd><dl class="first last docutils">
-<dt>size of database loaded, </dt>
+<dt>size of database loaded,</dt>
 <dd>0 - “100 images by class”       -&gt; total 6200
 1 - “1000 images by class”      -&gt; total 62000
 2 - “max 10000 images by class” -&gt; total 397621 images</dd>
 </dl>
-</dd>
-</dl>
 </div></blockquote>
-<dl class="docutils">
-<dt>dataset <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd>Dictionary object, the interesting attributes are: ‘bitmaps’,
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>dataset</strong> – Dictionary object, the interesting attributes are: ‘bitmaps’,
 a vector of the images of the dataset as 2D NumPy arrays,
-and ‘targets’, a vector of the target/class of each image.</dd>
-</dl>
+and ‘targets’, a vector of the target/class of each image.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
