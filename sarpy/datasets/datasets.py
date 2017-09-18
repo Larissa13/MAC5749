@@ -8,7 +8,7 @@ from skimage import io
 import pandas as pd
 import binascii
 
-from sarpy.utils import *
+from sarpy.representations import *
 
 # Root directory for this package
 root_directory = os.path.dirname(__file__)
@@ -39,7 +39,7 @@ def load_mpeg7():
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
+        data.append(Bitmap(io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -78,7 +78,7 @@ Returns
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
+        data.append(Bitmap(io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -116,7 +116,7 @@ Returns
     index = 0
 
     for index, filename in enumerate(filenames):
-        data.append(Shape(type_bitmap, io.imread(os.path.join(dataset_directory, filename))))
+        data.append(Bitmap(io.imread(os.path.join(dataset_directory, filename))))
         file_label = filename.split('-')[0]
         
         if(previous_label != file_label):
@@ -174,7 +174,7 @@ def load_nist(block=0):
                             sorted(list_of_images)
                             for filename in list_of_images:
                                     img = np.where(io.imread(os.path.join(directory_of_images,filename),True) > 0, 0, 1)                                    
-                                    bitmaps.append(Shape(type_bitmap,img.astype(np.int8)))
+                                    bitmaps.append(Bitmap(img.astype(np.int8)))
                                     targets.append(id_class);
                     id_class += 1
                     names.append(binascii.unhexlify(a_class).decode('UTF-8'));        
