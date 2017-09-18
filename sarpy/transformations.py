@@ -6,11 +6,14 @@ import numpy as np
 from math import ceil, floor
 from sarpy.utils import *
 
+from warnings import warn
+
 # +------------------------------------------------------------+
 # |                      SCALE OPERATIONS                      |
 # +------------------------------------------------------------+
 
 def shape_scale(shape, c, center=(0,0)):
+    warn(DeprecationWarning)
     """
         Scales shape by a certain factor. This function calls the appropriate `shape_scale`
         function for the type of the given shape.
@@ -36,6 +39,7 @@ def shape_scale(shape, c, center=(0,0)):
     raise NotImplementedError("This function hasn't yet been implemented for shapes of type {}".format(shape.get_type_name()))
 
 def shape_scale_bitmap(shape, c, center=(0,0)):
+    warn(DeprecationWarning)
     """
         Scales bitmap by a certain factor.
 
@@ -73,6 +77,7 @@ def shape_scale_bitmap(shape, c, center=(0,0)):
     return Shape(type_bitmap, g)
 
 def shape_scale_contour(shape, c):
+    warn(DeprecationWarning)
     """
         Scales contour by a certain factor.
 
@@ -112,6 +117,7 @@ def shape_scale_contour(shape, c):
 # +------------------------------------------------------------+
 
 def shape_shift(shape, c):
+    warn(DeprecationWarning)
     """
         Shifts shape by a certain factor. This function calls the appropriate `shift_scale`
         function for the type of the given shape.
@@ -133,6 +139,7 @@ def shape_shift(shape, c):
     raise NotImplementedError("This function hasn't yet been implemented for shapes of type {}".format(shape.get_type_name()))
     
 def shape_shift_bitmap(shape, c):
+    warn(DeprecationWarning)
     """
         Shifts bitmap by a certain factor.
 

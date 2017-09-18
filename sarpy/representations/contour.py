@@ -5,6 +5,7 @@ import numpy as np
 from .shape import Shape
 import skimage.io as skio
 from skimage import measure
+from math import floor
 
 def extract_contours(img):
     contours = measure.find_contours(img, 0)
@@ -19,7 +20,7 @@ class Contour(Shape):
         self.shape = data.shape
 
     def scale(self, c, center=(0,0)):
-        contour = shape.data
+        contour = self.shape.data
         if type(c) == type((0,0)):
             h2 = floor(c[0])
             w2 = floor(c[1])

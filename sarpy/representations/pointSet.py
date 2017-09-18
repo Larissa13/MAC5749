@@ -10,6 +10,7 @@ class PointSet(Shape):
         self.shape = data.shape
 
     def to_bitmap(self):
+        # Need to define the size of the final image? TODO
         h1 = size[0]
         w1 = size[1]
         setPoint = np.array(setPoint)

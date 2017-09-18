@@ -3,10 +3,12 @@ Methods for converting shape representations into other shape representations.
 """
 
 from skimage import measure
+from warnings import warn
 
 from sarpy.utils import *
 
 def convert_shape(shape, new_type, **kwargs):
+    warn(DeprecationWarning)
     """
         Converts a given shape into another representation.
 
@@ -47,6 +49,7 @@ def convert_to_bitmap(shape):
     pass
 
 def convert_to_contour(shape):
+    warn(DeprecationWarning)
     """
     Converts a given shape into a contour.
     Parameters:
@@ -77,6 +80,7 @@ def convert_to_contour(shape):
 
 
 def convert_to_point_set(shape):
+    warn(DeprecationWarning)
     """
     Converts a given shape into a pointset.
     Parameters:
