@@ -43,18 +43,18 @@ def contour2bm(c):
             - Bitmap representation of the input contour
         
     """
-	if (type(c) == type(np.array(()))) & (c.shape[1] >= 3):        
-		#
-		copy = np.asarray(c.copy())        
-		copy = copy - np.min(copy,axis=0)
-		#
-		maxv = np.max(copy,axis=0)        
-		img = np.zeros((maxv[1]+1,maxv[2]+1), dtype='int8')        
-		for i in range(c.shape[0]):
-			x = copy[i,1]
-			y = copy[i,2]
-			img[x,y] = 1            
-		return img;
-	else:
-		raise ValueError('Error: the argument has to be a contour')        
+    if (type(c) == type(np.array(()))) & (c.shape[1] >= 3):        
+        #
+        copy = np.asarray(c.copy())
+        copy = copy - np.min(copy,axis=0)
+        #
+        maxv = np.max(copy,axis=0)
+        img = np.zeros((maxv[1]+1,maxv[2]+1), dtype='int8')
+        for i in range(c.shape[0]):
+            x = copy[i,1]
+            y = copy[i,2]
+            img[x,y] = 1
+        return img;
+    else:
+        raise ValueError('Error: the argument has to be a contour')        
 
