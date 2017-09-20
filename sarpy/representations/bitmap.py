@@ -29,11 +29,13 @@ class Bitmap(Shape):
             for j in range(bitmap.shape[1]):
                 x = c1*(i - x0) + x0
                 y = c2*(j - y0) + y0
-                if x < bitmap.shape[0] and y < bitmap.shape[1]:
-                    if x > 0 and y > 0:
-                        g[i,j] = bitmap[np.ceil(x), np.ceil(y)]
-                    else:
+                if x > 0 and y > 0:
+                    try:
+                        g[i,j] = bitmap[int(np.around(x)), int(np.around(y))]
+                    except IndexError:
                         g[i,j] = 0
+                else:
+                    g[i,j] = 0
         self.data = g
 
     def shift(self, c):
