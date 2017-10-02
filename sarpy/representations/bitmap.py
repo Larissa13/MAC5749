@@ -7,6 +7,7 @@ from .contour import Contour, extract_contours
 from .point_set import PointSet
 from skimage import measure
 import skimage.io as skio
+import matplotlib.pyplot as plt
 
 class Bitmap(Shape):
     def __init__(self, data):
@@ -147,4 +148,5 @@ class Bitmap(Shape):
         self.shape = img.shape
         
     def show(self):
-        skio.imshow(self.data)
+        plt.imshow(self.data, cmap='Greys')
+        plt.show()
