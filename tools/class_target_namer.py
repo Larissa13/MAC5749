@@ -1,9 +1,6 @@
 """
 This script provides a function for returning the proper target string, given a dataset and class.
 """
-import sys
-sys.path.append('../')
-from sarpy.datasets import load_mpeg7, load_leaf, load_nist, load_fashion_mnist
 
 def get_class_name(dataset, target):
     if dataset == "mpeg7":
