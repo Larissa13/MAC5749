@@ -10,5 +10,6 @@ Requires:
 """
 
 from .representations import *
+from .datasets import *
 
-__all__ = ['representations', 'plotContour', 'plotContour1D']
+__all__ = ['representations', 'datasets', 'plotContour', 'plotContour1D']

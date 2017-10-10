@@ -22,7 +22,7 @@ def shape_scale(shape, c, center=(0,0)):
         * shape: Shape
           - Input shape
         * c: {float, tuple of floats}
-           - Scale factors. Separate factors can be defined as (row_scale, col_scale)
+           - Scale factors (image is reduced when c > 1, and image is augmented when c < 1). Separate factors can be defined as (row_scale, col_scale)
         * center: tuple of ints, optional
            - (x,y)-coordinates of the center of the image
         Returns:
@@ -47,7 +47,7 @@ def shape_scale_bitmap(shape, c, center=(0,0)):
         * shape: Shape
           - Input shape
         * c: {float, tuple of floats}
-           - Scale factors. Separate factors can be defined as (row_scale, col_scale)
+           - Scale factors (image is reduced when c > 1, and image is augmented when c < 1). Separate factors can be defined as (row_scale, col_scale)
         * center: tuple of ints, optional
            - (x,y)-coordinates of the center of the image
         Returns:
@@ -85,7 +85,7 @@ def shape_scale_contour(shape, c):
         * shape: Shape
           - Input shape
         * c: {float, tuple of floats}
-           - Scale factors. Separate factors can be defined as (row_scale, col_scale)
+           - Scale factors (image is reduced when c > 1, and image is augmented when c < 1). Separate factors can be defined as (row_scale, col_scale)
         Returns:
         * scaled_shape: Shape
             - Scaled version of the input shape

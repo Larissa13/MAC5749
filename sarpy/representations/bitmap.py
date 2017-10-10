@@ -4,9 +4,10 @@ Bitmap representation of shapes
 import numpy as np
 from .shape import Shape
 from .contour import Contour, extract_contours
-from .pointSet import PointSet
+from .point_set import PointSet
 from skimage import measure
 import skimage.io as skio
+import matplotlib.pyplot as plt
 
 class Bitmap(Shape):
     def __init__(self, data):
@@ -14,31 +15,52 @@ class Bitmap(Shape):
         self.shape = data.shape
 
     def scale(self, c, center=(0,0)):
+        """
+            Scales bitmap by a certain factor.
+
+            Parameters:
+            * shape: Shape
+              - Input shape
+            * c: {float, tuple of floats}
+               - Scale factors. Separate factors can be defined as (row_scale, col_scale)
+            * center: tuple of ints, optional
+               - (x,y)-coordinates of the center of the image
+            Returns:
+            * scaled_shape: Shape
+                - Scaled version of the input shape
+        """
         bitmap = self.data
 
-        if isinstance(c,tuple):
-            c1 = c[0]
-            c2 = c[1]
-        else:
-            c1 = c2 = c
-        x0 = center[0]
-        y0 = center[1]
+        if type(c) != tuple:
+            c = (c,c)
 
-        g = np.zeros_like(bitmap)
-        for i in range(bitmap.shape[0]):
-            for j in range(bitmap.shape[1]):
-                x = c1*(i - x0) + x0
-                y = c2*(j - y0) + y0
+        scaled_shape = np.zeros((round(bitmap.shape[0]/c[0]),round(bitmap.shape[1]/c[1])))
+        for i in range(scaled_shape.shape[0]):
+            for j in range(scaled_shape.shape[1]):
+                x = c[0]*(i - center[0]) + center[0]
+                y = c[1]*(j - center[1]) + center[1]
                 if x > 0 and y > 0:
                     try:
-                        g[i,j] = bitmap[int(np.around(x)), int(np.around(y))]
+                        scaled_shape[i,j] = bitmap[int(np.around(x)), int(np.around(y))]
                     except IndexError:
-                        g[i,j] = 0
+                        scaled_shape[i,j] = 0
                 else:
-                    g[i,j] = 0
-        self.data = g
+                    scaled_shape[i,j] = 0
+        return Bitmap(scaled_shape)
 
     def shift(self, c):
+        """
+            Shifts bitmap by a certain factor.
+
+            Parameters:
+            * shape: Shape
+              - Input shape
+            * c: {float, tuple of floats}
+               - Shift factors. Separate factors can be defined as (row_scale, col_scale)
+            Returns:
+            * shifted_shape: Shape
+                - Shifted version of the input shape
+        """
         bitmap = self.data
         if isinstance(c, tuple):
             c1 = c[0]
@@ -46,17 +68,35 @@ class Bitmap(Shape):
         else:
             c1 = c2 = c
 
-        g = np.zeros_like(self.data)
+        shifted_shape = np.zeros_like(self.data)
         for i in range(bitmap.shape[0]):
             for j in range(bitmap.shape[1]):
                 x = i - c1
                 y = j - c2
                 if x < bitmap.shape[0] and y < bitmap.shape[1]:
                     if x > 0 and y > 0:
-                        g[i, j] = bitmap[x, y]
+                        shifted_shape[i, j] = bitmap[x, y]
                     else:
-                        g[i, j] = 0
-        self.data = g
+                        shifted_shape[i, j] = 0
+        return Bitmap(shifted_shape)
+
+    def normalize(self, width, height):
+        """
+            Normalize bitmap by rescaling its size to (width, height). 
+
+            Parameters:
+            * width: int
+               - Shape width size
+            * height: int
+               - Shape height size
+            Returns:
+            * normalizes_shape: Shape
+                - Normalized version of the input bitmap
+        """
+        # Determining scaling ratios and center
+        height_ratio = self.data.shape[0]/height
+        width_ratio = self.data.shape[1]/width
+        return self.scale((height_ratio, width_ratio))
 
     def to_bitmap(self):
         return self
@@ -64,19 +104,40 @@ class Bitmap(Shape):
     def to_contour(self):
         return extract_contours(self.data)
 
-    def to_pointSet(self):
+    def to_pointSet(self, conn=8):
+        """
+            Converts this bitmap to a PointSet representation.
+            TODO: allow for inner/outer selection
+
+            Parameters:
+            * conn: int
+              - Connectivity topology to be used (4 or 8-neighborhood)
+            Returns:
+            * point_set: PointSet
+                - PointSet representation of this shape
+        """
+        assert conn == 4 or conn == 8, "Error in Bitmap.to_pointSet: 'conn' must be 4 or 8"
+
+        # Building adjacency lists
+        if conn == 4:
+            adjacents = [(0,1),(1,0),(0,-1),(-1,0)]
+        else:
+            adjacents = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+
+        point_set_data = []
+
+        # Iterating over pixels and checking if they're contours
         bitmapImage = self.data
-        data = []
-        row = 0
-        while row < bitmapImage.shape[0]:
-            column = 0
-            while column + 1 < bitmapImage.shape[1]:
-                if (bitmapImage[row][column] != bitmapImage[row][column + 1]):
-                     if ((not bitmapImage[row][column]) and (bitmapImage[row][column + 1])) or ((bitmapImage[row][column]) and not (bitmapImage[row][column + 1])):
-                        data.append([row + 1, column + 1])
-                column += 1
-            row += 1
-        return PointSet(np.array(data))
+        for row, line in enumerate(bitmapImage):
+            for col, pixel in enumerate(line):
+                # If pixel is foreground, check neighbors
+                if bitmapImage[row,col]: 
+                    # Building neighborhood
+                    neighborhood = [bitmapImage[row+x,col+y] for x,y in adjacents if row+x > 0 and col+y > 0 and row+x < bitmapImage.shape[0] and col+y < bitmapImage.shape[1]] + [0 for x,y in adjacents if not(row+x > 0 and col+y > 0 and row+x < bitmapImage.shape[0] and col+y < bitmapImage.shape[1])]
+                    # if any pixel is background, then this is part of the contour
+                    if not all(neighborhood):
+                        point_set_data.append([row,col])
+        return PointSet(np.array(point_set_data))
 
     def save(self, filename):
         skio.imsave(filename,self.data)
@@ -87,4 +148,5 @@ class Bitmap(Shape):
         self.shape = img.shape
         
     def show(self):
-        skio.imshow(self.data)
+        plt.imshow(self.data, cmap='Greys')
+        plt.show()
