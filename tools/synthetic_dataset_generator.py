@@ -123,41 +123,44 @@ def load_datasets(size):
         * targets: list of strings
           - Dataset targets, in the "class target name" format
     """
-    bitmaps, targets = [], []
+    bitmaps_mpeg7, targets_mpeg7 = [], []
+    bitmaps_fashion_mnist, targets_fashion_mnist = [], []
+    bitmaps_leaf, targets_leaf = [], []
+    bitmaps_nist, targets_nist = [], []
 
     # loading mpeg7
     print("Loading MPEG7...", end=" ", flush=True)
     dataset = load_mpeg7()
-    for bitmap, target in zip(dataset['bitmaps'][:210], dataset['targets'][:210]):
-        bitmaps.append(bitmap.normalize(*size))
-        targets.append(get_class_name("mpeg7", target))
+    for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
+        bitmaps_mpeg7.append(bitmap.normalize(*size))
+        targets_mpeg7.append(get_class_name("mpeg7", target))
     print("Done.")
 
     # loading fashion_mnist
     print("Loading Fashion_MNIST...", end=" ", flush=True)
-    #dataset = load_fashion_mnist()
-    #for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
-    #    bitmaps.append(bitmap.normalize(*size))
-    #    targets.append(get_class_name("fashion_mnist", target))
+    dataset = load_fashion_mnist()
+    for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
+        bitmaps_fashion_mnist.append(bitmap.normalize(*size))
+        targets_fashion_mnist.append(get_class_name("fashion_mnist", target))
     print("Done.")
 
     # loading leaf
     print("Loading Leaf...", end=" ", flush=True)
-    #dataset = load_leaf()
-    #for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
-    #    bitmaps.append(bitmap.normalize(*size))
-    #    targets.append(get_class_name("leaf", target))
+    dataset = load_leaf()
+    for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
+        bitmaps_leaf.append(bitmap.normalize(*size))
+        targets_leaf.append(get_class_name("leaf", target))
     print("Done.")
 
     # loading nist
     print("Loading NIST...", end=" ", flush=True)
-    #dataset = load_nist()
-    #for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
-    #    bitmaps.append(bitmap.normalize(*size))
-    #    targets.append(get_class_name("nist", target))
+    dataset = load_nist()
+    for bitmap, target in zip(dataset['bitmaps'], dataset['targets']):
+        bitmaps_nist.append(bitmap.normalize(*size))
+        targets_nist.append(get_class_name("nist", target))
     print("Done.")
 
-    return bitmaps, targets
+    return {"mpeg7": (bitmaps_mpeg7, targets_mpeg7), "fashion_mnist": (bitmaps_fashion_mnist, targets_fashion_mnist), "leaf": (bitmaps_leaf, targets_leaf), "nist": (bitmaps_nist, targets_nist)}
 
 def generate_synthetic_dataset(dataset_name, number_of_images, size_of_image, size_of_shape, shapes_per_image, dataset_distribution=(0.25,0.25,0.25,0.25), distortion_chance=0):
     """
@@ -183,7 +186,7 @@ def generate_synthetic_dataset(dataset_name, number_of_images, size_of_image, si
             will have a number of shapes randomly selected from the list.
         * dataset_distribution: tuple of 4 floats
           - Percentage of each dataset to be included as examples, as: 
-            `(mpeg7, leaf, fashion_mnist, nist)` [not implemented]
+            `(mpeg7, fashion_mnist, leaf, nist)`
         * distortion_chance: float
           - Percentual chance of applying distortion to a shape. [not implemented]
     """
@@ -198,17 +201,21 @@ def generate_synthetic_dataset(dataset_name, number_of_images, size_of_image, si
         pass
 
     # Loading datasets
-    bitmaps, targets = load_datasets(size_of_shape)
-    total_dataset = len(bitmaps)
+    datasets = load_datasets(size_of_shape)
 
     # Generating images
     print("\nGenerating images:\n")
     for i in range(number_of_images):
         print("On image {}".format(i))
         # Selecting shapes
+        sampled_bitmaps, sampled_targets = [], []
         shapes_in_this_image = random.choice(shapes_per_image)
-        indexes = random.sample(range(total_dataset), shapes_in_this_image)
-        sampled_bitmaps, sampled_targets = [bitmaps[i] for i in indexes], [targets[i] for i in indexes]
+        for dataset, distribution in zip(datasets, dataset_distribution):
+            bitmaps, targets = datasets[dataset][0], datasets[dataset][1]
+            shapes_from_this_dataset = int(shapes_in_this_image * distribution)
+            indexes = random.sample(range(len(bitmaps)), shapes_from_this_dataset)
+            sampled_bitmaps += [bitmaps[i] for i in indexes]
+            sampled_targets += [targets[i] for i in indexes]
         # Randomizing positions for each shape
         positions = [randomize_position(0, size_of_image[0]-bitmap.shape[0], 0, size_of_image[1]-bitmap.shape[1]) for bitmap in sampled_bitmaps]
 
@@ -218,4 +225,5 @@ def generate_synthetic_dataset(dataset_name, number_of_images, size_of_image, si
         plt.imsave(os.path.join(dataset_name, "{}.png".format(i)), generated_image, cmap="gray")
         open(os.path.join(dataset_name, "{}.txt".format(i)), "w").write(generated_targets)
 
-#generate_synthetic_dataset("test", 2, (500,500), (50,50), 10)
+#generate_synthetic_dataset("test", 2, (500,500), (50,50), 10, (1/3, 0, 1/3, 1/3))
+generate_synthetic_dataset("clean", 200, (500,500), (50,50), 15, (1/3, 0, 1/3, 1/3))
