@@ -11802,11 +11802,13 @@ The following steps are necessary to utilize this model in our application:</p>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">LabelEncoder</span>
+
+<span class="kn">from</span> <span class="nn">skimage</span> <span class="k">import</span> <span class="n">io</span>
 <span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="k">import</span> <span class="n">resize</span>
 <span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">gray2rgb</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">import</span> <span class="nn">sarpy</span> <span class="k">as</span> <span class="nn">sp</span>
 <span class="kn">from</span> <span class="nn">sarpy.datasets</span> <span class="k">import</span> <span class="n">load_mpeg7</span><span class="p">,</span> <span class="n">mpeg7_get_class_name</span>
@@ -11814,8 +11816,9 @@ The following steps are necessary to utilize this model in our application:</p>
 <span class="kn">import</span> <span class="nn">keras</span>
 <span class="kn">import</span> <span class="nn">keras.applications.inception_v3</span> <span class="k">as</span> <span class="nn">inception</span>
 <span class="kn">from</span> <span class="nn">keras.preprocessing</span> <span class="k">import</span> <span class="n">image</span>
-<span class="kn">from</span> <span class="nn">keras.models</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Sequential</span>
 <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">GlobalAveragePooling2D</span>
+<span class="kn">from</span> <span class="nn">keras.wrappers.scikit_learn</span> <span class="k">import</span> <span class="n">KerasClassifier</span>
 <span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 </pre></div>
 
@@ -11857,13 +11860,18 @@ The following steps are necessary to utilize this model in our application:</p>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_mpeg7</span><span class="p">()</span>
 <span class="n">bitmaps</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;bitmaps&quot;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;targets&quot;</span><span class="p">]</span>
 
+<span class="c1"># Encoding Labels</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+<span class="n">encoded_targets</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
 <span class="n">number_of_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">targets</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded dataset: </span><span class="si">{}</span><span class="s2"> examples, </span><span class="si">{}</span><span class="s2"> classes&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bitmaps</span><span class="p">),</span> <span class="n">number_of_classes</span><span class="p">))</span>
 
 <span class="c1"># Normalizing images</span>
 <span class="n">image_size_height</span> <span class="o">=</span> <span class="n">image_size_width</span> <span class="o">=</span> <span class="mi">299</span>
 <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">image</span><span class="o">.</span><span class="n">img_to_array</span><span class="p">(</span><span class="n">gray2rgb</span><span class="p">(</span><span class="n">resize</span><span class="p">(</span><span class="n">bitmap</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">299</span><span class="p">,</span><span class="mi">299</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">bitmap</span> <span class="ow">in</span> <span class="n">bitmaps</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">number_of_classes</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">encoded_targets</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">number_of_classes</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11876,7 +11884,7 @@ The following steps are necessary to utilize this model in our application:</p>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Loaded dataset. 1400 examples, 70 classes
+<pre>Loaded dataset: 1400 examples, 70 classes
 </pre>
 </div>
 </div>
@@ -11931,7 +11939,7 @@ As usual, the data is preprocessed splitting into training set and testing set.<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model-Training-[?]">Model Training [?]<a class="anchor-link" href="#Model-Training-[?]">&#182;</a></h2><p><b>TODO</b></p>
+<h2 id="Model-Training">Model Training<a class="anchor-link" href="#Model-Training">&#182;</a></h2><p>The <b>InceptionV3</b> model has trained weights for image classification on ImageNet. To fit this model for the new task (identify our own dataset images), we replace and train the classifier on the top layers. By running this process we <b>fine tune</b> the weights of the pre-trained network via backpropagation.</p>
 
 </div>
 </div>
@@ -11945,10 +11953,11 @@ As usual, the data is preprocessed splitting into training set and testing set.<
 <span class="n">base_model</span> <span class="o">=</span> <span class="n">inception</span><span class="o">.</span><span class="n">InceptionV3</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">base_model</span><span class="o">.</span><span class="n">output</span>
-
 <span class="n">x</span> <span class="o">=</span> <span class="n">GlobalAveragePooling2D</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
+
 <span class="c1"># Fully-connected layer</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
 <span class="c1"># Classes logistic layer -- with 70 classes</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">number_of_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
 
@@ -11961,7 +11970,7 @@ As usual, the data is preprocessed splitting into training set and testing set.<
     <span class="n">layer</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="c1"># compile the model (should be done *after* setting layers to non-trainable)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;rmsprop&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;rmsprop&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
 
 <span class="c1"># train the model on the new data for a few epochs</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">);</span>
@@ -11978,25 +11987,25 @@ As usual, the data is preprocessed splitting into training set and testing set.<
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Epoch 1/10
-700/700 [==============================] - 340s - loss: 4.8138    
+700/700 [==============================] - 336s - loss: 5.1251 - acc: 0.0571    
 Epoch 2/10
-700/700 [==============================] - 348s - loss: 2.7091    
+700/700 [==============================] - 361s - loss: 2.8441 - acc: 0.3557    
 Epoch 3/10
-700/700 [==============================] - 345s - loss: 1.6734    
+700/700 [==============================] - 362s - loss: 1.7893 - acc: 0.5800    
 Epoch 4/10
-700/700 [==============================] - 337s - loss: 0.9994    
+700/700 [==============================] - 372s - loss: 1.0537 - acc: 0.7714    
 Epoch 5/10
-700/700 [==============================] - 345s - loss: 0.6902    
+700/700 [==============================] - 346s - loss: 0.7589 - acc: 0.8314    
 Epoch 6/10
-700/700 [==============================] - 349s - loss: 0.5381    
+700/700 [==============================] - 373s - loss: 0.4956 - acc: 0.8929    
 Epoch 7/10
-700/700 [==============================] - 363s - loss: 0.3436    
+700/700 [==============================] - 379s - loss: 0.3666 - acc: 0.9000    
 Epoch 8/10
-700/700 [==============================] - 355s - loss: 0.3676    
+700/700 [==============================] - 365s - loss: 0.2716 - acc: 0.9400    
 Epoch 9/10
-700/700 [==============================] - 320s - loss: 0.3140    
+700/700 [==============================] - 366s - loss: 0.3106 - acc: 0.9186    
 Epoch 10/10
-700/700 [==============================] - 351s - loss: 0.1318    
+700/700 [==============================] - 395s - loss: 0.1728 - acc: 0.9657    
 </pre>
 </div>
 </div>
@@ -12025,8 +12034,8 @@ Epoch 10/10
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>700/700 [==============================] - 361s    
-Score: 1.47913465568
+<pre>700/700 [==============================] - 470s    
+Score: [2.7495540891374861, 0.36000000034059798]
 </pre>
 </div>
 </div>
@@ -12047,7 +12056,85 @@ Score: 1.47913465568
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">predict_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">predict_proba</span><span class="p">]</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y_test</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision:&quot;</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recall:&quot;</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Accuracy: 0.36
+Precision: 0.371007405293
+Recall: 0.631257710945
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/alyssa/anaconda3/lib/python3.5/site-packages/sklearn/metrics/classification.py:1137: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples.
+  &#39;recall&#39;, &#39;true&#39;, average, warn_for)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[5, 0, 0, ..., 0, 0, 0],
+       [0, 3, 0, ..., 0, 0, 0],
+       [0, 0, 1, ..., 0, 0, 0],
+       ..., 
+       [0, 0, 0, ..., 8, 0, 0],
+       [0, 0, 0, ..., 0, 5, 1],
+       [0, 0, 0, ..., 0, 0, 3]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Display some results</span>
@@ -12245,7 +12332,7 @@ DHIKBEHI+B+mTFfTzxP55AAAAABJRU5ErkJggg==
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Predicted: device1 (True: device7)
+<pre>Predicted: chicken (True: device7)
 </pre>
 </div>
 </div>
@@ -12372,7 +12459,7 @@ AYsCERmwKBCRAYsCERmwKBCRwX8BJBeflSYXQ6sAAAAASUVORK5CYII=
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Predicted: device1 (True: device0)
+<pre>Predicted: chicken (True: device0)
 </pre>
 </div>
 </div>
@@ -12448,7 +12535,7 @@ UAgFAAqhAEAhFAAohAIAhVAAoPwHexXl02coW3EAAAAASUVORK5CYII=
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Predicted: device2 (True: device5)
+<pre>Predicted: chicken (True: device5)
 </pre>
 </div>
 </div>
@@ -12657,7 +12744,7 @@ BaUAQEEpAFBQCgAUlAIABaUAQEEpAFBQCgAUlAIAxX9kCGLfM/ovMwAAAABJRU5ErkJggg==
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Predicted: guitar (True: key)
+<pre>Predicted: bird (True: key)
 </pre>
 </div>
 </div>
@@ -12834,7 +12921,7 @@ aAoIgjD4f2xfx0hw5lKVAAAAAElFTkSuQmCC
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Predicted: octopus (True: fly)
+<pre>Predicted: fly (True: fly)
 </pre>
 </div>
 </div>
@@ -12948,7 +13035,7 @@ lAIAA6UAwEApADBQCgAMlAIAA6UAwEApADBQCgAM/wLXlj2p03y84QAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">HTML</span>
@@ -12963,7 +13050,7 @@ lAIAA6UAwEApADBQCgAMlAIAA6UAwEApADBQCgAM/wLXlj2p03y84QAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/t2ByLmLnYJ8?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
@@ -12971,6 +13058,19 @@ lAIAA6UAwEApADBQCgAMlAIAA6UAwEApADBQCgAM/wLXlj2p03y84QAAAABJRU5ErkJggg==
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
