@@ -20,6 +20,6 @@ The library is based on the book: [Shape Analysis and Classification: Theory and
 
 **Examples**
 
-[Example Group 2](examples/Group_2.ipynb)
+[Example Group 2](examples/Group_2.ipynb) <br>
 [Example Group 3](examples/Group_3.ipynb)
 
