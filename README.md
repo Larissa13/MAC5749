@@ -30,7 +30,7 @@ This project implements Sarpy, a shape analysis and classification library based
 
 
 
-**Examples**
+**Classification Projetcs Examples**
 
 [Example Group 1](projects/group1/Group1.ipynb) <br>
 [Example Group 2](projects/group2/Group2.ipynb) <br>
