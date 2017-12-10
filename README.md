@@ -4,9 +4,11 @@
 http://rogerdudler.github.io/git-guide/
 
 
-This project implements a shape analysis and classification library based on the [Shape Analysis Course at IME-USP](https://www.ime.usp.br/index.php?option=com_replicado&task=disciplina&sgldis=MAC5749), Brazil. 
+This project implements Sarpy, a shape analysis and classification library based on the [Shape Analysis Course at IME-USP](https://www.ime.usp.br/index.php?option=com_replicado&task=disciplina&sgldis=MAC5749), Brazil. 
 
-The library is based on the book: [Shape Analysis and Classification: Theory and Practice](https://www.ime.usp.br/~cesar/shape_crc/).
+# Sarpy Library
+
+The library is based on the book: [Shape Analysis and Classification: Theory and Practice](https://www.ime.usp.br/~cesar/shape_crc/). It uses in backend: NumPy, Pandas and Scikit Image. 
 
 **Categories**
 
@@ -20,6 +22,7 @@ The library is based on the book: [Shape Analysis and Classification: Theory and
 
 **Examples**
 
+[Example Group 1](examples/Group_1.ipynb) <br>
 [Example Group 2](examples/Group_2.ipynb) <br>
 [Example Group 3](examples/Group_3.ipynb)
 
