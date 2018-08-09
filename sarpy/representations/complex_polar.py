@@ -2,9 +2,10 @@
 Complex polar representation of shape
 """
 
+from math import cos, sin
 import numpy as np
 from .shape import Shape
-from math import cos, sin
+from .contour import Contour
 
 class ComplexPolar(Shape):
 	def __init__(self, data):
@@ -23,4 +24,4 @@ class ComplexPolar(Shape):
 			y = rho * sin(theta)
 			contour = [t, x, -y]
 			contours.append(contour)
-		return np.array(contours)
+		return Contour(np.array(contours))

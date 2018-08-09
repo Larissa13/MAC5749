@@ -3,31 +3,42 @@ Bitmap representation of shapes
 """
 import numpy as np
 from .shape import Shape
-from .contour import Contour, extract_contours
+from .contour import Contour
 from .point_set import PointSet
 from skimage import measure
 import skimage.io as skio
 import matplotlib.pyplot as plt
 
 class Bitmap(Shape):
+    """Bitmap Shape representation.
+
+    Stores the shape as a full bitmap, a 2D boolean array.
+    Pixels with value 1 contain the shape; pixels with
+    value 0 are background.
+
+    Attributes
+    ----------
+    data : ndarray
+        2D boolean array containing the shape representation data.
+    """
+
     def __init__(self, data):
         self.data = data
-        self.shape = data.shape
 
     def scale(self, c, center=(0,0)):
-        """
-            Scales bitmap by a certain factor.
+        """Scales bitmap by a certain factor.
 
-            Parameters:
-            * shape: Shape
-              - Input shape
-            * c: {float, tuple of floats}
-               - Scale factors. Separate factors can be defined as (row_scale, col_scale)
-            * center: tuple of ints, optional
-               - (x,y)-coordinates of the center of the image
-            Returns:
-            * scaled_shape: Shape
-                - Scaled version of the input shape
+        Parameters:
+        -----------
+        c: {float, tuple of floats}
+            Scale factors. Separate factors can be defined as (row_scale, col_scale)
+        center: tuple of ints, optional
+            (x,y)-coordinates of the center of the image
+
+        Returns:
+        --------
+        scaled_shape: Bitmap
+            Scaled version of this bitmap.
         """
         bitmap = self.data
 
@@ -49,17 +60,17 @@ class Bitmap(Shape):
         return Bitmap(scaled_shape)
 
     def shift(self, c):
-        """
-            Shifts bitmap by a certain factor.
+        """Shifts bitmap by a certain factor.
 
-            Parameters:
-            * shape: Shape
-              - Input shape
-            * c: {float, tuple of floats}
-               - Shift factors. Separate factors can be defined as (row_scale, col_scale)
-            Returns:
-            * shifted_shape: Shape
-                - Shifted version of the input shape
+        Parameters:
+        -----------
+        c: {float, tuple of floats}
+            Shift factors. Separate factors can be defined as (row_scale, col_scale)
+
+        Returns:
+        --------
+        shifted_shape: Bitmap
+            Shifted version of this bitmap.
         """
         bitmap = self.data
         if isinstance(c, tuple):
@@ -82,16 +93,19 @@ class Bitmap(Shape):
 
     def normalize(self, width, height):
         """
-            Normalize bitmap by rescaling its size to (width, height). 
+            Normalize bitmap by rescaling its size to (width, height).
 
             Parameters:
-            * width: int
-               - Shape width size
-            * height: int
-               - Shape height size
+            -----------
+            width: int
+                Shape width size
+            --------
+            height: int
+                Shape height size
             Returns:
-            * normalizes_shape: Shape
-                - Normalized version of the input bitmap
+            --------
+            normalized_shape: Shape
+                Normalized version of the input bitmap
         """
         # Determining scaling ratios and center
         height_ratio = self.data.shape[0]/height
@@ -102,19 +116,33 @@ class Bitmap(Shape):
         return self
 
     def to_contour(self):
-        return extract_contours(self.data)
+        """Converts bitmap to Contour.
+
+        Returns
+        -------
+        contour : Contour
+            Converted bitmap in contour format.
+        """
+        contours = measure.find_contours(self.data, 0)
+        contours_lens = np.array([len(c) for c in contours])
+        sort_order = (-contours_lens).argsort()
+        data = np.array([np.array([np.array([j, contours[i][j][0], contours[i][j][1]], dtype = int) for j in range(len(contours[i]))], dtype = int) for i in sort_order])
+        return Contour(data)
 
     def to_pointSet(self, conn=8):
-        """
-            Converts this bitmap to a PointSet representation.
-            TODO: allow for inner/outer selection
+        """Converts this bitmap to a PointSet representation.
 
-            Parameters:
-            * conn: int
-              - Connectivity topology to be used (4 or 8-neighborhood)
-            Returns:
-            * point_set: PointSet
-                - PointSet representation of this shape
+        TODO: allow for inner/outer selection
+
+        Parameters:
+        -----------
+        conn: int
+            Connectivity topology to be used (4 or 8-neighborhood)
+
+        Returns:
+        --------
+        point_set: PointSet
+            PointSet representation of this shape
         """
         assert conn == 4 or conn == 8, "Error in Bitmap.to_pointSet: 'conn' must be 4 or 8"
 
@@ -131,7 +159,7 @@ class Bitmap(Shape):
         for row, line in enumerate(bitmapImage):
             for col, pixel in enumerate(line):
                 # If pixel is foreground, check neighbors
-                if bitmapImage[row,col]: 
+                if bitmapImage[row,col]:
                     # Building neighborhood
                     neighborhood = [bitmapImage[row+x,col+y] for x,y in adjacents if row+x > 0 and col+y > 0 and row+x < bitmapImage.shape[0] and col+y < bitmapImage.shape[1]] + [0 for x,y in adjacents if not(row+x > 0 and col+y > 0 and row+x < bitmapImage.shape[0] and col+y < bitmapImage.shape[1])]
                     # if any pixel is background, then this is part of the contour
@@ -140,13 +168,32 @@ class Bitmap(Shape):
         return PointSet(np.array(point_set_data))
 
     def save(self, filename):
+        """Saves shape to file.
+
+        Parameters
+        -------
+        filename : str
+            Filename to save the shape to.
+        """
         skio.imsave(filename,self.data)
 
     def read(self, filename):
+        """Reads shape from file.
+
+        Loads the content of the file into this object.
+
+        Parameters
+        -------
+        filename : str
+            Filename to read the shape from.
+        """
         img = skio.imread(filename, as_grey=True)
         self.data = img
-        self.shape = img.shape
-        
+
     def show(self):
+        """Visualizes the bitmap.
+
+        Plots the bitmap utilizing matplotlib's `imshow`.
+        """
         plt.imshow(self.data, cmap='Greys')
         plt.show()
