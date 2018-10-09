@@ -3,7 +3,8 @@ Contour representation of shapes
 """
 import numpy as np
 from .shape import Shape
-from .bitmap import Bitmap
+import sarpy.representations.bitmap
+# from .bitmap import Bitmap
 import skimage.io as skio
 from skimage import measure
 from math import floor
@@ -85,7 +86,7 @@ class Contour(Shape):
             x = copy[i,1]
             y = copy[i,2]
             img[x,y] = 1
-        return Bitmap(img);
+        return sarpy.representations.bitmap.Bitmap(img);
 
     def save(self, filename):
         pass
