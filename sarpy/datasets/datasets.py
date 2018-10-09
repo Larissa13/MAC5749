@@ -4,7 +4,11 @@ Methods for loading and returning built-in datasets.
 
 import os
 import numpy as np
+import urllib.request
 from skimage import io
+from tqdm import tqdm
+from scipy.io import loadmat
+import zipfile
 import binascii
 
 from sarpy.representations import Bitmap
@@ -361,3 +365,124 @@ def load_nist(block=0):
 
 
     return {'bitmaps': bitmaps, 'targets': targets, 'names':names}
+
+
+def load_emnist(dataset, width=28, height=28, max_=None, verbose=True, validation=False):
+    ''' Load data in from .mat file as specified by the paper.
+        Arguments:
+            dataset: a EMNIST dataset from ['balanced', 'bymerge', 'digits', 'byclass', 'letters', 'mnist']
+        Optional Arguments:
+            width: specified width
+            height: specified height
+            max_: the max number of samples to load
+            verbose: enable verbose printing
+        Returns:
+            A tuple of training and test data, and the mapping for class code to ascii value,
+            in the following format:
+                - ((training_images, training_labels), (testing_images, testing_labels), mapping)
+    '''
+
+    # Local functions
+    def rotate(img):
+        # Used to rotate images (for some reason they are transposed on read-in)
+        flipped = np.fliplr(img)
+        return np.rot90(flipped)
+
+    def display(img, threshold=0.5):
+        # Debugging only
+        render = ''
+        for row in img:
+            for col in row:
+                if col > threshold:
+                    render += '@'
+                else:
+                    render += '.'
+            render += '\n'
+        return render
+
+    def iterator(data, verbose, description=''):
+        if verbose:
+            data = tqdm(data)
+            data.set_description(description)
+        return data
+
+    dataset_directory = os.path.join(root_directory, 'EMNIST')
+    if not os.path.isdir(dataset_directory):
+        os.makedirs(dataset_directory)
+    files = [
+        'emnist-balanced.mat',
+        'emnist-bymerge.mat',
+        'emnist-digits.mat',
+        'emnist-byclass.mat',
+        'emnist-letters.mat',
+        'emnist-mnist.mat'
+    ]
+    for f in [os.path.join(dataset_directory, 'matlab', f) for f in files]:
+        if not os.path.exists(f):
+            url = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
+            print('Downloading dataset: ' + url)
+            dataset_compressed_filename = os.path.join(dataset_directory, 'matlab.zip')
+            urllib.request.urlretrieve(url, dataset_compressed_filename)
+            zip_ref = zipfile.ZipFile(dataset_compressed_filename, 'r')
+            zip_ref.extractall(dataset_directory)
+            zip_ref.close()
+            break
+
+    # Load convoluted list structure form loadmat
+    selected_dataset = os.path.join(dataset_directory, 'matlab', 'emnist-{}.mat'.format(dataset))
+    if not os.path.exists(selected_dataset):
+        raise ValueError('Invalid dataset:' + selected_dataset)
+    mat = loadmat(selected_dataset)
+
+    # Load char mapping
+    mapping = {kv[0]: kv[1:][0] for kv in mat['dataset'][0][0][2]}
+
+    # Load training data
+    if max_ == None:
+        max_ = len(mat['dataset'][0][0][0][0][0][0])
+    training_images = mat['dataset'][0][0][0][0][0][0][:max_].reshape(max_, height, width, 1)
+    training_labels = mat['dataset'][0][0][0][0][0][1][:max_]
+
+    # Load testing data
+    if max_ == None:
+        max_ = len(mat['dataset'][0][0][1][0][0][0])
+    else:
+        max_ = int(max_ / 6)
+    testing_images = mat['dataset'][0][0][1][0][0][0][:max_].reshape(max_, height, width, 1)
+    testing_labels = mat['dataset'][0][0][1][0][0][1][:max_]
+
+    # Reshape training data to be valid
+    for i in iterator(range(len(training_images)), verbose, description='reshape training'):
+        training_images[i] = rotate(training_images[i])
+
+    # Reshape testing data to be valid
+    for i in iterator(range(len(testing_images)), verbose, description='reshape testing'):
+        testing_images[i] = rotate(testing_images[i])
+
+    # Convert type to float32
+    training_images = training_images.astype('float32')
+    testing_images = testing_images.astype('float32')
+
+    nb_classes = len(mapping)
+
+    if validation:
+        test_size = testing_images.shape[0]
+        train_size = training_images.shape[0]
+        k = train_size - test_size
+        validation_images = training_images[k:]
+        validation_labels = training_labels[k:]
+        training_images = training_images[:k]
+        training_labels = training_labels[:k]
+        validation_size = test_size
+    else:
+        validation_images = None
+        validation_labels = None
+        validation_size = 0
+
+    print('Train size:', training_images.shape[0])
+    print('Test size:', testing_images.shape[0])
+    print('Validation size:', validation_size)
+    print('# classes:', nb_classes)
+
+    return (training_images, training_labels, testing_images, testing_labels,
+            validation_images, validation_labels, mapping, nb_classes)
