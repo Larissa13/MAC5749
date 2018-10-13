@@ -33,7 +33,7 @@ class Shape:
         data : `obj`
             Object containing the shape representation data.
         """
-        this.data = data
+        self.data = data
 
     # Overloads for lists/numpy arrays
     def __len__(self):

@@ -9,6 +9,7 @@ from skimage import measure
 import skimage.io as skio
 import matplotlib.pyplot as plt
 
+
 class Bitmap(Shape):
     """Bitmap Shape representation.
 
@@ -25,8 +26,9 @@ class Bitmap(Shape):
     def __init__(self, data):
         self.data = data
 
-    def scale(self, c, center=(0,0)):
-        """Scales bitmap by a certain factor.
+    def scaleOld(self, c, center=(0,0)):
+        """
+            Scales bitmap by a certain factor.
 
         Parameters:
         -----------
@@ -59,8 +61,56 @@ class Bitmap(Shape):
                     scaled_shape[i,j] = 0
         return Bitmap(scaled_shape)
 
-    def shift(self, c):
-        """Shifts bitmap by a certain factor.
+
+    def scale(self, c, center=(0,0)):
+        """
+            Scales bitmap by a certain factor.
+
+            Parameters:
+            * shape: Shape
+              - Input shape
+            * c: {float, tuple of floats}
+               - Scale factors. Separate factors can be defined as (row_scale, col_scale)
+            * center: tuple of ints, optional
+               - (x,y)-coordinates of the center of the image
+            Returns:
+            * scaled_shape: Shape
+                - Scaled version of the input shape
+        """
+        bitmap = self.data
+
+        if type(c) != tuple:
+            c = (c,c)
+
+        dx = round(bitmap.shape[0] / c[0])
+        dy = round(bitmap.shape[1] / c[1])
+
+        x = np.array(np.around(c[0] * (np.arange(0, dx) - center[0]) + center[0]), dtype=np.int8)
+        y = np.array(np.around(c[1] * (np.arange(0, dy) - center[1]) + center[1]), dtype=np.int8)
+
+        x_ = np.repeat(x, dy)
+        y_ = np.tile(y, dx)
+
+        scaled_shape = np.reshape(bitmap[x_, y_], (dx, dy))
+
+        # zeros to negative indexes
+
+        idx_y = np.argwhere(y < 0).flatten()
+        x_ = np.repeat(np.arange(0, dx), idx_y.shape[0])
+        y_ = np.tile(idx_y, dx)
+        scaled_shape[x_, y_] = 0
+
+        idx_x = np.argwhere(x < 0).flatten()
+        x_ = np.tile(idx_x, dy)
+        y_ = np.repeat(np.arange(0, dy), idx_x.shape[0])
+        scaled_shape[x_, y_] = 0
+
+        return Bitmap(scaled_shape)
+
+
+    def shiftOld(self, c):
+        """
+            Shifts bitmap by a certain factor.
 
         Parameters:
         -----------
@@ -90,6 +140,59 @@ class Bitmap(Shape):
                     else:
                         shifted_shape[i, j] = 0
         return Bitmap(shifted_shape)
+
+
+    def shift(self, c):
+        """
+            Shifts bitmap by a certain factor.
+
+            Parameters:
+            * shape: Shape
+              - Input shape
+            * c: {float, tuple of floats}
+               - Shift factors. Separate factors can be defined as (row_scale, col_scale)
+            Returns:
+            * shifted_shape: Shape
+                - Shifted version of the input shape
+        """
+
+        shifted_shape = np.zeros((self.data.shape[0], self.data.shape[1]))
+
+        if isinstance(c, tuple):
+            c1, c2 = c
+        else:
+            c1 = c2 = c
+
+        height, width = self.data.shape
+
+        if abs(c1) >= height or abs(c2) >= width:
+            return Bitmap(shifted_shape)
+
+        if c1 >= 0:
+            dest_x0 = c1
+            dest_x1 = height
+            orig_x0 = 0
+            orig_x1 = height - c1
+        else:
+            dest_x0 = 0
+            dest_x1 = height + c1
+            orig_x0 = 0-c1
+            orig_x1 = height
+
+        if c2 >= 0:
+            dest_y0 = c2
+            dest_y1 = width
+            orig_y0 = 0
+            orig_y1 = width - c2
+        else:
+            dest_y0 = 0
+            dest_y1 = width + c2
+            orig_y0 = 0-c2
+            orig_y1 = width
+
+        np.copyto(shifted_shape[dest_x0:dest_x1, dest_y0:dest_y1], self.data[orig_x0:orig_x1,orig_y0:orig_y1])
+        return Bitmap(shifted_shape)
+
 
     def normalize(self, width, height):
         """
