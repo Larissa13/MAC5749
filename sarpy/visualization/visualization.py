@@ -1,6 +1,44 @@
 """
 Methods for visualizing dataset content and analisys performance
 """
+import numpy as np
+import cv2 as cv
+
+def get_examples(labels, classes, num_rows, at_random):
+    samples = []
+    for cls in classes:
+        cls_rows = np.where(labels == cls)[0]
+
+        if num_rows is None:
+            num_cls_samples = len(cls_rows)
+        else:
+            num_cls_samples = min(num_rows, len(cls_rows))
+
+        if at_random:
+            cls_rows = np.random.permutation(cls_rows)[:num_cls_samples]
+        else:
+            cls_rows = cls_rows[:num_cls_samples]
+
+        samples.append(cls_rows)
+        
+    return samples
+
+
+def build_mosaic_header(class_names, classes, shape):
+    image_height, image_width, channels = shape
+    mosaic_header = np.zeros((image_height, len(classes)*image_width, channels), dtype=np.uint8)
+
+    font = cv.FONT_HERSHEY_SIMPLEX
+    font_scale = 0.8
+    font_color = [255] * channels
+    line_type = 2
+
+    for cls_id in range(len(classes)):
+        cv.putText(mosaic_header, class_names[cls_id][1], (cls_id*image_width, image_height//2),
+                   font, font_scale, font_color, line_type)
+    
+    return mosaic_header
+
 
 
 def mosaic(images,
@@ -18,22 +56,7 @@ def mosaic(images,
     if classes is None:
         classes = np.unique(labels)
 
-    samples = []
-    
-    for cls in classes:
-        cls_rows = np.where(labels == cls)[0]
-
-        if num_rows is None:
-            num_cls_samples = len(cls_rows)
-        else:
-            num_cls_samples = min(num_rows, len(cls_rows))
-
-        if at_random:
-            cls_rows = np.random.permutation(cls_rows)[:num_cls_samples]
-        else:
-            cls_rows = cls_rows[:num_cls_samples]
-
-        samples.append(cls_rows)
+    samples = get_examples(labels, classes, num_rows, at_random)
 
     max_num_images = max([len(cls_samples) for cls_samples in samples])
     image_height, image_width = image_size
@@ -48,17 +71,7 @@ def mosaic(images,
                    
     # Labels de título
     if class_names is not None:
-        mosaic_header = np.zeros((image_height, len(classes)*image_width, channels), dtype=np.uint8)
-
-        font = cv.FONT_HERSHEY_SIMPLEX
-        font_scale = 0.8
-        font_color = [255] * channels
-        line_type = 2
-
-        for cls_id in range(len(classes)):
-            cv.putText(mosaic_header, class_names[cls_id][1], (cls_id*image_width, image_height//2),
-                       font, font_scale, font_color, line_type)
-
+        mosaic_header = build_mosaic_header(class_names, classes, (image_height, image_width, channels))
         mosaic = np.concatenate((mosaic_header, mosaic), axis=0)
         
     if channels == 1:

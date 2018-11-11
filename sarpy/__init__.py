@@ -11,5 +11,6 @@ Requires:
 
 from .representations import *
 from .datasets import *
+from .visualization import *
 
-__all__ = ['representations', 'datasets', 'plotContour', 'plotContour1D']
+__all__ = ['representations', 'datasets', 'visualization', 'plotContour', 'plotContour1D']
