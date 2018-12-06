@@ -15,12 +15,12 @@ def get_examples(labels, classes, num_rows, at_random):
             num_cls_samples = min(num_rows, len(cls_rows))
 
         if at_random:
-            cls_rows = np.random.permutation(cls_rows)[:num_cls_samples]
-        else:
-            cls_rows = cls_rows[:num_cls_samples]
+            cls_rows = np.random.permutation(cls_rows)
+
+        cls_rows = cls_rows[:num_cls_samples]
 
         samples.append(cls_rows)
-        
+
     return samples
 
 
@@ -36,7 +36,7 @@ def build_mosaic_header(class_names, classes, shape):
     for cls_id in range(len(classes)):
         cv.putText(mosaic_header, class_names[cls_id][1], (cls_id*image_width, image_height//2),
                    font, font_scale, font_color, line_type)
-    
+
     return mosaic_header
 
 
@@ -83,6 +83,10 @@ def mosaic(images,
         cv.destroyAllWindows()
         
     return mosaic
+
+
+
+
 
 
 def visual_describe():
