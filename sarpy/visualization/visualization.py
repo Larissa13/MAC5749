@@ -24,16 +24,16 @@ def get_examples(labels, classes, num_rows, at_random):
     return samples
 
 
-def build_mosaic_header(class_names, classes, shape):
+def build_mosaic_header(class_names, shape):
     image_height, image_width, channels = shape
-    mosaic_header = np.zeros((image_height, len(classes)*image_width, channels), dtype=np.uint8)
+    mosaic_header = np.zeros((image_height, len(class_names)*image_width, channels), dtype=np.uint8)
 
     font = cv.FONT_HERSHEY_SIMPLEX
     font_scale = 0.8
     font_color = [255] * channels
     line_type = 2
 
-    for cls_id in range(len(classes)):
+    for cls_id in range(len(class_names)):
         cv.putText(mosaic_header, class_names[cls_id][1], (cls_id*image_width, image_height//2),
                    font, font_scale, font_color, line_type)
 
@@ -68,25 +68,21 @@ def mosaic(images,
         image_samples = [cv.resize(img, (image_width, image_height)) for img in images[cls_samples]]
         image_samples = np.array(image_samples).reshape((-1, image_width, channels))
         mosaic[0:image_width*len(image_samples), column*image_width:(column+1)*image_width, :] = image_samples
-                   
+
     # Labels de título
     if class_names is not None:
-        mosaic_header = build_mosaic_header(class_names, classes, (image_height, image_width, channels))
+        mosaic_header = build_mosaic_header(class_names, (image_height, image_width, channels))
         mosaic = np.concatenate((mosaic_header, mosaic), axis=0)
-        
+
     if channels == 1:
         mosaic = mosaic.reshape((mosaic.shape[0], mosaic.shape[1]))
-    
+
     if display:
         cv.imshow('Image', mosaic)
         cv.waitKey(0)
         cv.destroyAllWindows()
-        
+
     return mosaic
-
-
-
-
 
 
 def visual_describe():
