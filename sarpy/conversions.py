@@ -106,7 +106,7 @@ def convert_to_point_set(shape):
                         pointSet.append([row + 1, column + 1])
                 column += 1
             row += 1
-        
+
         return Shape(type_point_set, pointSet)
 
     if new_type == type_contour: # Contour to point set
