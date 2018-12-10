@@ -1,5 +1,5 @@
 import unittest
-from sarpy.visualization import get_examples, build_mosaic_header, mosaic
+from sarpy.visualization import get_examples, build_mosaic_header, mosaic, hist_components
 import numpy as np
 
 class VisualizationTest(unittest.TestCase):
@@ -65,3 +65,10 @@ class VisualizationTest(unittest.TestCase):
             m = mosaic(np.array(images), np.array(labels), class_names=names, at_random=True)
 
             self.assertEqual(shape_sum, (m.shape, np.sum(m)))
+
+
+    def test_hist_components(self):
+        true_hists = [[1]*4, [2]*195, [0]*125]
+        for imgs, true_hist in zip(self.images_sets, true_hists):
+            hist = hist_components(imgs, "text", show=False)
+            self.assertEqual(hist, true_hist)
